@@ -1,6 +1,6 @@
 # yelp-camp
 My first ever coding project!(credit to Colt Steele web developer course 2021)\
-Building a small web application project with node, express, mongoDB, bootstrape\
+Building a small web application project with html,bootstrap, node, express, mongoDB\
 \
 What I learned so far:\
 -defining restful API routes, perform basic CRUD functionality \
