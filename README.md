@@ -1,5 +1,5 @@
 # yelp-camp
-my first ever coding project!(credit to Colt Steele web developer course 2021)\
+My first ever coding project!(credit to Colt Steele web developer course 2021)\
 Building a small web application project with node, express, mongoDB, bootstrape\
 \
 What I learned so far:\
