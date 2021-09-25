@@ -5,8 +5,9 @@ const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 
 module.exports.index = async (req, res) => {
     if (!req.query.page) {
+        const campground = await Campground.find({});
         const campgrounds = await Campground.paginate({});
-        res.render('campgrounds/index', { campgrounds })
+        res.render('campgrounds/index', { campgrounds, campground })
     } else {
         const { page } = req.query;
         const campgrounds = await Campground.paginate({}, { page });
