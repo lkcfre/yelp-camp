@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
@@ -34,20 +34,20 @@ db.once("open", () => {
 });
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views')) 
-app.use(express.urlencoded({extended: true}))
+app.set('views', path.join(__dirname, 'views'))
+app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize());
 
-const secret = process.env.SECRET || 'thisshouldbeabettersecret' 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret'
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret
     }
-})  
+})
 store.on('error', function (err) {
     console.log("SESSION STORE ERROR", err)
 })
@@ -59,8 +59,8 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        expires: Date.now() + 1000*60*60*24*7,
-        maxAge: 1000*60*60*24*7
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
 app.use(session(sessionConfig));
@@ -74,6 +74,7 @@ const scriptSrcUrls = [
     "https://kit.fontawesome.com/",
     "https://cdnjs.cloudflare.com/",
     "https://cdn.jsdelivr.net",
+    "https://code.jquery.com"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com/",
@@ -107,7 +108,7 @@ app.use(
                 "https://res.cloudinary.com/danazvoz1/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
                 "https://images.unsplash.com/",
             ],
-            fontSrc: ["'self'", ...fontSrcUrls],    
+            fontSrc: ["'self'", ...fontSrcUrls],
         },
     })
 );
@@ -120,7 +121,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -130,20 +131,20 @@ app.use((req,res,next) => {
 
 app.get('/', (req, res) => {
     res.render('home')
-})  
+})
 app.use('/', userRoutes)
 app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/reviews', reviewRoutes)
 
-app.all('*', (req,res,next) => {
-    next(new ExpressError('Page Not Found',404))
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
 })
 
-app.use((err,req,res,next) => {
-    const {status=500} =err;
-    if(!err.message) err.message = 'Oh No, Something Went Wrong!'
-    res.status(status).render('error', {err})
-    
+app.use((err, req, res, next) => {
+    const { status = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(status).render('error', { err })
+
 })
 
 const port = process.env.PORT || 3000;
